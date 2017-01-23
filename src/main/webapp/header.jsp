@@ -47,7 +47,7 @@
         <a href="#" class="bt-menu-trigger"><span>Menu</span></a>
         <ul>
           <li class="current bt-icon "><a href="index.html">Home</a></li>
-         <li class="bt-icon"><a href="index-1.html">About</a></li>
+         <li class="bt-icon"><a href="index-1.html">about</a></li>
          <li class="bt-icon"><a href="index-2.html">Menu</a></li>
          <li class="bt-icon"><a href="index-3.html">Blog</a></li>
          <li class="bt-icon"><a href="index-4.html">Reservation</a></li>
