@@ -7,7 +7,7 @@ public class UtilDB
 {  
     public Connection getConn()  throws URISyntaxException, SQLException
     {
-       String dbUrl = System.getenv("postgres://wbrueegggklfdg:f5ee4be198cb238354f92c461f6b98b7eb45e88adeb2ad3020836cb8973c352d@ec2-54-235-245-255.compute-1.amazonaws.com:5432/d7i51gj4rvqe99");
+       String dbUrl = System.getenv("postgres://fadibelbgvgquh:547e4b2004019c31bdc29db917fe4648447cd4b4e4efd147df661ab9be884238@ec2-54-163-253-94.compute-1.amazonaws.com:5432/ddjmtri86ldgpl");
        return DriverManager.getConnection(dbUrl);
     }
 }
