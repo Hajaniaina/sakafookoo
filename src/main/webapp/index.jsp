@@ -18,9 +18,9 @@
      <body class="page1">
          
    <%
-   JOptionPane.showMessageDialog(null, "teste");
+   
        ArrayList<DetailMenu>listeMenu=new FonctionMenu().listerMenus();
-       
+       out.print(listeMenu.size());
        int userId=0;
        String mssgRech="";
        if(session.getAttribute("user")!=null)
