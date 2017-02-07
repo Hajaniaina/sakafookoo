@@ -306,8 +306,8 @@ h1 a img {
 }
 
 .page1 .content {
-	padding-top: 4px;
-	padding-bottom: 105px;
+	padding-top: 0px;
+	padding-bottom: 5px;
 
 }
 
@@ -329,13 +329,13 @@ h1 a img {
  -o-box-sizing: border-box;
  box-sizing: border-box;
 	padding: 70px 0 67px;
-	left: 50%;
+	left: 64%;
 	height: 217px;
 	display: block;
 	top: 50%;
 	overflow: hidden;
 	margin-top: -108px;
-	margin-left: -104px;
+	margin-right: 104px;
 	font: bold 20px/20px 'Open Sans', sans-serif;
 	color: #fff;
 	width: 217px;
@@ -731,7 +731,7 @@ a.col2:hover {
 /************Footer***********/
 
 footer {
-	padding: 75px 0 70px;
+	padding:11px 0 70px;
 	display: block;
 	color: #85846d;
 	font-size: 12px;

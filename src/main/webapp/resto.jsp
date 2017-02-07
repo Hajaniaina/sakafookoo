@@ -53,7 +53,7 @@
 <div class="content"><div class="ic">More Website Templates @ TemplateMonster.com - December 02, 2013!</div>
   <div class="container_12">
     <div class="grid_8">  
-      <h3 class="">Blog</h3>
+      <h3 class="">Liste de restaurant</h3>
       <div class="post">
         <img src="images/page4_img1.jpg" alt="" class="img_inner fleft">
         <div class="extra_wrapper">

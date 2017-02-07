@@ -1,158 +1,195 @@
+<%@page import="objet.Client"%>
+<%@page import="javax.swing.JOptionPane"%>
+<%@page import="FoctionChat.InsertChat"%>
+<%@page import="fonction.FonctionChat"%>
+<%@page import="objet.Chat"%>
+<%@page import="java.util.ArrayList"%>
 <!DOCTYPE html>
 <html lang="en">
      <head>
      <title>Contacts</title>
-     <meta charset="utf-8">
-     <link rel="icon" href="images/favicon.ico">
-     <link rel="shortcut icon" href="images/favicon.ico" />
-     
-   
-     <script src="js/jquery.js"></script>
-     <script src="js/jquery-migrate-1.1.1.js"></script>
-     <script src="js/jquery.equalheights.js"></script>
-     <script src="js/jquery.ui.totop.js"></script>
-     <script src="js/TMForm.js"></script>
-     <script src="js/jquery.easing.1.3.js"></script>
-        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASm3CwaK9qtcZEWYa-iQwHaGi3gcosAJc&amp;sensor=false"></script>
+            
+<meta charset="utf-8">
+    <jsp:include page="LOGIN/index.jsp" />
      <script>
         $(document).ready(function(){
 
           $().UItoTop({ easingType: 'easeOutQuart' });
         }) ;
+        
+        
      </script>
-     <!--[if lt IE 8]>
-       <div style=' clear: both; text-align:center; position: relative;'>
-         <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
-           <img src="http://storage.ie6countdown.com/assets/100/images/banners/warning_bar_0000_us.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today." />
-         </a>
-
-    <![endif]-->
-    <!--[if lt IE 9]>
-      <script src="js/html5shiv.js"></script>
-      <link rel="stylesheet" media="screen" href="css/ie.css">
-    <![endif]-->
-    <!--[if lt IE 10]>
-      <script src="js/html5shiv.js"></script>
-      <link rel="stylesheet" media="screen" href="css/ie1.css">
-    <![endif]-->
-    
      </head>
-     <body  class="">
+     <body>
 
 <!--==============================header=================================-->
 <jsp:include page="header.jsp" />
-
+ <script type="text/javascript">
+ 
+</script>
 <!--==============================Content=================================-->
-
- <section>
+<%
+        int userId=0;
+        int clientId=0;
+        FonctionChat fChat=new FonctionChat();
+       if(session.getAttribute("user")!=null)
+       {
+           userId=(int)session.getAttribute("user");
+       }
+       if(session.getAttribute("destinateur")!=null)
+       {
+           clientId=(int)session.getAttribute("destinateur");
+       }
+       //tousles msg
      
-  <div class="chat">
-    <ul>
-      <li class="other">
-        <a class="user" href="#"><img alt="" src="https://s3.amazonaws.com/uifaces/faces/twitter/toffeenutdesign/128.jpg" /></a>
-        <div class="date">
-          2 minutes ago
+       ServletContext cont=getServletContext();
+        if(cont.getAttribute("img")!=null)
+         {
+             // JOptionPane.showMessageDialog(null, cont.getAttribute("img"));
+              String img=request.getParameter("image");
+              String imgPath=cont.getAttribute("img").toString();
+              new InsertChat().insertChat(""+userId, ""+clientId, imgPath,"1");
+              cont.removeAttribute("img");
+         }
+        ArrayList<Chat> listeMessages = new FonctionChat().listeMessages(userId, clientId);
+        ArrayList<Client> listeClient=fChat.listerTousLesMemres(""+userId);
+        ArrayList<Client> personnes = fChat.listerLesPersonnes(userId);
+        ArrayList<Client> UnMembresDest=fChat.UnMembres(""+clientId);
+        ArrayList<Client> UnMembresExp=fChat.UnMembres(""+userId);
+       
+%>
+<div class="content" style="margin: 0 auto;width:1000px">
+    <form method="" action="">
+         <input type="hidden" id="userIdSedeur" value="<%=userId%>">
+         <input type="hidden" id="userIdRecepteur" value="<%=clientId%>">
+    </form>
+    <div style="margin-top:5%;margin-left:20px;float:left;">
+        <div >
+            <p style="font-size: 20px">Conversations (<%=personnes.size()%>) </p>
         </div>
-        <div class="message blur">
-          <div class="hider">
-            <span>Click to read</span>
-          </div>
-          <p>
-            Itaque quod et dolore accusantium. Labore aut similique ab voluptas rerum quia. Reprehenderit voluptas doloribus ut nam tenetur ipsam.
-          </p>
+        <div>
+            <ul>
+            <%for(int i=0;i<personnes.size();i++){%>
+                <li style="font-size: 16px"><a href="ToChatUser?sendeur=<%=userId%>&dest=<%=personnes.get(i).getIdClient() %>"> <% out.print(personnes.get(i).getNom().concat(" ".concat(personnes.get(i).getPrenom())));%></a></li>
+            <%}%>
+           </ul> 
         </div>
-      </li>
-      <li class="other">
-        <a class="user" href="#"><img alt="" src="https://s3.amazonaws.com/uifaces/faces/twitter/toffeenutdesign/128.jpg" /></a>
-        <div class="date">
-          5 minutes ago
-        </div>
-        <div class="message">
-          <div class="hider">
-            <span>Click to read</span>
-          </div>
-          <p>
-            Modi ratione aliquid non. Et porro deserunt illum sed velit necessitatibus. Quis fuga et et fugit consequuntur. Et veritatis fugiat veniam pariatur maxime iusto aperiam.
-          </p>
-        </div>
-      </li>
-      <li class="you">
-        <a class="user" href="#"><img alt="" src="https://s3.amazonaws.com/uifaces/faces/twitter/igorgarybaldi/128.jpg" /></a>
-        <div class="date">
-          7 minutes ago
-        </div>
-        <div class="message">
-          <div class="hider">
-            <span>Click to read</span>
-          </div>
-          <p>
-            Provident impedit atque nemo culpa et modi molestiae. Error non dolorum voluptas non a. Molestiae et nobis nisi sed.
-          </p>
-        </div>
-      </li>
-      <li class="other">
-        <a class="user" href="#"><img alt="" src="https://s3.amazonaws.com/uifaces/faces/twitter/toffeenutdesign/128.jpg" /></a>
-        <div class="date">
-          8 minutes ago
-        </div>
-        <div class="message">
-          <div class="hider">
-            <span>Click to read</span>
-          </div>
-          <p>
-            Id vel ducimus perferendis fuga excepturi nulla. Dolores dolores amet et laborum facilis. Officia magni ut non autem et qui incidunt. Qui similique fugit vero porro qui cupiditate.
-          </p>
-        </div>
-      </li>
-      <li class="you">
-        <a class="user" href="#"><img alt="" src="https://s3.amazonaws.com/uifaces/faces/twitter/igorgarybaldi/128.jpg" /></a>
-        <div class="date">
-          10 minutes ago
-        </div>
-        <div class="message">
-          <div class="hider">
-            <span>Click to read</span>
-          </div>
-          <p>
-            Provident impedit atque nemo culpa et modi molestiae. Error non dolorum voluptas non a. Molestiae et nobis nisi sed.
-          </p>
-        </div>
-      </li>
-      <li class="you">
-        <a class="user" href="#"><img alt="" src="https://s3.amazonaws.com/uifaces/faces/twitter/igorgarybaldi/128.jpg" /></a>
-        <div class="date">
-          10 minutes ago
-        </div>
-        <div class="message">
-          <div class="hider">
-            <span>Click to read</span>
-          </div>
-          <p>
-            Est ut at eum sed perferendis ea hic. Tempora perspiciatis magnam aspernatur explicabo ea. Sint atque quod.
-          </p>
-        </div>
-      </li>
-    </ul>
-  </div>
-     <div class="type-text">
-        <input type="text" placeholder='Votre reponse...' />
-        <button type='submit'><i id='i' class='icon-comments-alt'></i></button>
     </div>
-</section>
- <script src="js/index.js"></script>
+    <div class="chat" id="pageChat"  style="width:50%;margin-top:5%;"> 
+        <div>
+        <ul>
+         <% for(int i=0;i<listeMessages.size();i++){%>
+         <% if(listeMessages.get(i).getIdExpediteur()!=userId){%>
+          <li class="other">
+            <a class="user" href="#"><img alt="" src="" /></a>
+            <div class="date" style="font-size: 15px">
+                  <%=UnMembresDest.get(0).getNom() %>:
+                <%=listeMessages.get(i).getDateMessage()%>
+             
+             
+            </div>
+            <div class="message">
+              <div class="hider">
+                <span></span>
+              </div>
+                <%
+                    
+                %>
+              <% if(listeMessages.get(i).getIsImageShare().compareToIgnoreCase("0")==0){%>
+              <p>
+                  <%=listeMessages.get(i).getContenuMsg() %>
+              </p>
+              <%}%>
+               <% if(listeMessages.get(i).getIsImageShare().compareToIgnoreCase("1")==0){%>
+                  <img src="images/<%=listeMessages.get(i).getContenuMsg() %>" height="150" width="150" />
+              <%}%>
+            </div>
+          </li>
+          <%}%>
+           <% if(listeMessages.get(i).getIdExpediteur()==userId){%>
+          <li class="you">
+            <a class="user" href="#"><img alt="" src="" /></a>
+                <div class="date" style="font-size: 15px">
+                  <%=UnMembresExp.get(0).getNom() %>:
+                  <%=listeMessages.get(i).getDateMessage() %>
+                
+                </div>
+            <div class="message">
+              <div class="hider">
 
+              </div>
+                 <% if(listeMessages.get(i).getIsImageShare().compareToIgnoreCase("0")==0){%>
+                      <p>
+                         <%=listeMessages.get(i).getContenuMsg() %>
+                     </p>
+              
+                <%}%>
+                <% if(listeMessages.get(i).getIsImageShare().compareToIgnoreCase("1")==0){%>
+                    <p>
+                        <img src="images/<%=listeMessages.get(i).getContenuMsg() %>" height="150" width="150" />
+                    </p>
+                <%}%>
+            </div>
+          </li>
+          <%}%>
+         <%}%>
+        </ul>
+      </div>
+   <div class="type-text" style="margin-left: 20%;width:80%;margin-top:5%;">
+      <form>
+        <div class="form-group" >
+         
+            <textarea class="form-control" rows="2" id="text" ></textarea>
+        </div>
+      </form>
+         <button type="button" class="btn btn-primary" id="send">Envoyer</button>
+    </div>
+     </div>
+    
+   <div style="height:100%;width:250px;margin-right:100px;margin-top:5%;">
+        <div>
+           <p style="font-size: 20px">Membres (<%=listeClient.size()%>)</p>
+        </div>
+        <div style="height:100%;overflow: auto;">
+            <ul>  
+            <%for(int i=0;i<listeClient.size();i++){%>
+             <li style="font-size: 16px"><a href="ToChatUser?sendeur=<%=userId%>&dest=<%=listeClient.get(i).getIdClient() %>"> <% out.print(listeClient.get(i).getNom().concat(" ".concat(listeClient.get(i).getPrenom())));%></a></li>
+             <%}%>
+        </ul>
+        </div>   
+    </div>
+</div>
+    
+
+ <script src="js/index.js"></script>
+<script>
+     $(document).ready(function(){
+		$("#send").click(function()
+		{
+			$.ajax({
+			   url : 'Chat',
+			   type : 'GET',
+			   data :  'userIdSedeur='+document.getElementById('userIdSedeur').value+'&userIdRecepteur='+document.getElementById('userIdRecepteur').value+'&text='+document.getElementById('text').value,
+			   dataType:'html',
+                            success : function(code_html,statut)
+                            {
+                              //$('#answer').append(code_html);
+                              
+                             },
+			   error : function(resultat, statut, erreur)
+			   { 
+				 console.log(erreur);
+			   },
+			   complete : function(resultat, statut)
+			  {							
+			  }
+			});
+		    });
+        });
+</script>
 <!--==============================footer=================================-->
 
-<footer>    
-  <div class="container_12">
-    <div class="grid_6 prefix_3">
-      <a href="index.html" class="f_logo"><img src="images/lol.png" alt=""></a>
-      <div class="copy">
-      &copy; 2013 | <a href="#">Privacy Policy</a> <br> Website   designed by <a href="http://store.templatemonster.com?aff=netsib1" rel="nofollow">TemplateMonster.com</a>
-      </div>
-    </div>
-  </div>
-</footer>
+
        <script>
       $(document).ready(function(){ 
          $(".bt-menu-trigger").toggle( 

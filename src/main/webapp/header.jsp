@@ -1,15 +1,15 @@
-<header> 
+<header style="height: 229px"> 
     <link rel="icon" href="images/favicon.ico">
      <link rel="shortcut icon" href="images/favicon.ico" />
      
-     <link rel="stylesheet" href="css/style2.css">
-     <link rel="stylesheet" href="css/style3.css">
+    
      <link rel="stylesheet" href="css/style_1.css">
       <link rel="stylesheet" href="css/style_2.css">
-      <link rel="stylesheet" href="css/style.css">
+     
+       <link rel="stylesheet" href="css/style2.css">
+     
 	 <!--Nouveau-->
-	
-	
+     <script src="AJAX/ajaxFile.js"></script>
 	  <!------------------>
      <script src="js/jquery.js"></script>
      <script src="js/jquery-migrate-1.1.1.js"></script>
@@ -31,38 +31,57 @@
      <script src="js/jquery.tabs.min.js"></script>
      <script src="js/touchTouch.jquery.js"></script>
      <script src="js/jquery.easing.1.3.js"></script>
+      <link rel="stylesheet" href="css/style3.css">
+     
      <!----->
      
      <script type="text/javascript" src="js/move-top.js"></script>
-  <div class="container_12">
-   <div class="grid_12"> 
-     <div class="cart">		
-          <span class="fa fa-shopping-cart my-cart-icon" style="position: absolute; background-color: inherit; z-index: 999;"><span class="badge badge-notify my-cart-badge"></span></span>
+     <div class="container_12" >
+         
+   <div class="grid_12"  style="margin-right: 0px"> 
+     <div class="cart">	
+         <a href="Deconnexion">
+             <button type="button" class="btn btn-default">
+                 <span class="glyphicon glyphicon-off"></span>
+             </button>
+         </a>
      </div>
-    <h1><a href="index.html"><img src="images/logo.png" alt="Boo House"></a> </h1>
+       <div class="cart" style="margin-right: 10px">		
+             <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModalLog">
+                 <span class="glyphicon  glyphicon-user"></span>
+             </button>
+     </div>
+       <div class="cart">		
+          <span class="fa fa-shopping-cart my-cart-icon" style=" z-index: 999;"><span class="badge badge-notify my-cart-badge"></span></span>
+     </div>
+       <div id="imageUser" style="width: 100px;height: 100px;float: left">
+           <img src="" height="100" width="100" alt=""/>
+       </div>   
+    <h1><a href="index.jsp"><img src="images/log.png" alt="Boo House"></a> </h1>
     <div class="menu_block">
 
 
-    <nav id="bt-menu" class="bt-menu">
+        <nav id="bt-menu" class="bt-menu">
         <a href="#" class="bt-menu-trigger"><span>Menu</span></a>
         <ul>
-          <li class="current bt-icon "><a href="index.html">Home</a></li>
-         <li class="bt-icon"><a href="ADMIN/">about</a></li>
-         <li class="bt-icon"><a href="index-2.html">Menu</a></li>
-         <li class="bt-icon"><a href="index-3.html">Blog</a></li>
-         <li class="bt-icon"><a href="index-4.html">Reservation</a></li>
-         <li class="bt-icon"><a href="index-5.html">Contacts</a></li>
+         <li class="current bt-icon "><a href="index.jsp" >Accueil</a></li>
+         <li class="bt-icon"><a href="map.jsp">Map</a></li>
+         <li class="bt-icon"><a href="menu.jsp">Menu</a></li>
+         <li class="bt-icon"><a href="ListeAmis.jsp">Chat</a></li>
+         <li class="bt-icon"><a href="reservation.jsp">Reservation</a></li>
+         <li class="bt-icon"><a href="apropos.jsp">Contacts</a></li>
         </ul>
       </nav>
     
  <div class="clear"></div>
 </div>
-<div class="clear"></div>
-          </div>
-      </div>
+    <div class="clear"></div>
+    
+   </div>
+</div>
 </header>
 
-<script type='text/javascript' src="js/jquery.mycart.js"></script>
+
  <script src="js/bootstrap.js"></script>
 
   <script type="text/javascript">
@@ -104,3 +123,23 @@
 
   });
   </script>
+
+<script>
+      $(document).ready(function(){
+         $('.bt-menu').addClass('bt-menu-open');
+         $(".bt-menu-trigger").toggle( 
+          function(){
+            $('.bt-menu').addClass('bt-menu-open'); 
+          }, 
+          function(){
+            $('.bt-menu').removeClass('bt-menu-open'); 
+          } 
+        ); 
+      }) 
+    </script>
+    
+    
+    <!--==============================header=================================-->
+            <jsp:include page="LOGIN/index.jsp" />
+            <script type='text/javascript' src="js/jquery.mycart.js"></script>
+        <!--==============================Content=================================-->

@@ -1,3 +1,11 @@
+<%@page import="javax.swing.JOptionPane"%>
+<%@page import="objet.Categorie"%>
+<%@page import="fonction.FonctionCategorie"%>
+<%@page import="FonctionCommentaire.GetNombreCommentaire"%>
+<%@page import="FonctionJaime.GetNombreJaime"%>
+<%@page import="fonction.FonctionMenu"%>
+<%@page import="objet.DetailMenu"%>
+<%@page import="java.util.ArrayList"%>
 <!DOCTYPE html>
 <html lang="en">
      <head>
@@ -7,13 +15,7 @@
      <link rel="shortcut icon" href="images/favicon.ico" />
      <link rel="stylesheet" href="css/touchTouch.css">
      <link rel="stylesheet" href="css/style.css">
-     <script src="js/jquery.js"></script>
-     <script src="js/jquery-migrate-1.1.1.js"></script>
-     <script src="js/jquery.equalheights.js"></script>
-     <script src="js/jquery.ui.totop.js"></script>
-     <script src="js/jquery.tabs.min.js"></script>
-     <script src="js/touchTouch.jquery.js"></script>
-     <script src="js/jquery.easing.1.3.js"></script>
+    
      <script>
         $(document).ready(function(){
 
@@ -22,21 +24,17 @@
          
        }) 
      </script>
-     <!--[if lt IE 8]>
-       <div style=' clear: both; text-align:center; position: relative;'>
-         <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
-           <img src="http://storage.ie6countdown.com/assets/100/images/banners/warning_bar_0000_us.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today." />
-         </a>
-
-    <![endif]-->
-    <!--[if lt IE 9]>
-      <script src="js/html5shiv.js"></script>
-      <link rel="stylesheet" media="screen" href="css/ie.css">
-    <![endif]-->
-    <!--[if lt IE 10]>
-      <script src="js/html5shiv.js"></script>
-      <link rel="stylesheet" media="screen" href="css/ie1.css">
-    <![endif]-->
+    
+     <%
+           
+            FonctionCategorie fcat=new FonctionCategorie();
+            ArrayList<Categorie>listeCat=fcat.listeCategories();
+            int userId=0;
+            if(session.getAttribute("user")!=null)
+            {
+                userId=(int)session.getAttribute("user");
+            }
+     %>
     
      </head>
      <body  class="">
@@ -55,163 +53,75 @@
     
 <div class="tab-head ">
     <nav class="nav-sidebar">
-            <ul class="nav tabs ">
-              <li class="active"><a href="#tab1" data-toggle="tab">Boisson</a></li>
-              <li class=""><a href="#tab2" data-toggle="tab">Plat</a></li> 
-              <li class=""><a href="#tab3" data-toggle="tab">Dessert</a></li>  
-              <li class=""><a href="#tab4" data-toggle="tab">Entrée</a></li>
+             <ul class="nav tabs ">
+               <% for(int j=0;j<listeCat.size();j++){%>
+                     <li class=""><a href="#tab<%=j%>" data-toggle="tab" style="font-family: initial;font-size: 30px"><%=listeCat.get(j).getNomCategorie() %></a></li> 
+             <%}%>
             </ul>
     </nav><br><br><hr>
     <div class=" tab-content tab-content-t ">
-            <div class="tab-pane active text-style" id="tab1">
+       <% int k=1;
+           for(int j=0;j<listeCat.size();j++){%>
+       <%
+            //JOptionPane.showMessageDialog(null, listeCat.get(j).getIdCategorie());
+            ArrayList<DetailMenu>listeMenu=new FonctionMenu().listerMenusParCategorie(listeCat.get(j).getIdCategorie());
+           
+       %>
+            <div class="tab-pane active text-style" id="tab<%=j%>">
                     <div class=" con-w3l">
                         <!--tab 1-->
                        <%for (int i=0;i<4;i++){%>
+                         <%
+                            int nombreJaime=new GetNombreJaime().getNombreJaime(listeMenu.get(i).getProduit().getIdProduit()); 
+                         %>
+       
+                        <form action="">
+                            <div class="form-group">
+                                <input type="hidden" name="userId"  id="userId<%=i%><%=j%>" value="<%=userId%>">
+                                <input type="hidden" name="menuId" id="menuId<%=i%><%=j%>" value="<%= listeMenu.get(i).getProduit().getIdProduit() %>">
+                                <input type="hidden" name="date" id="date<%=i%><%=j%>"  value="2013-12-21">
+                            </div>
+                      </form>
+                            <div id="teste"></div>
                             <div class="col-md-3 m-wthree">
                                     <div class="col-m">
-                                            <a href="#" data-toggle="modal" data-target="#myModal1" class="offer-img">
-                                                <img src="images/big3.jpg" class="img-responsive" alt="" height="100" width="100">
+                                        <div class="women" style="font-size: 10px; ">
+                                            <h4><%=listeMenu.get(i).getNomMenu() %></h4>							
+                                        </div><br>
+                                        <a href="#" data-toggle="modal" data-target="#myModal1<%=i%><%=j%>" class="offer-img">
+                                            <img src="images/<%=listeMenu.get(i).getProduit().getImage() %>" class="img-responsive" alt="" height="100" width="100">
                                                     <div class="offer"><p><span>Voir</span></p></div>
-                                            </a>
+                                        </a>
                                             <div class="mid-1">
-                                                    <div class="women">
-                                                            <h6><a href="single.html">Soya Chunks</a>(1 kg)</h6>							
+                                                    
+                                                <div class="women" style=" background-color: #FFF ">
+                                                    <h4 style="color: black;font-family: inherit;font-size: 20px "><%=listeMenu.get(i).getProduit().getDesignation() %></h4>							
                                                     </div>
                                                     <div class="mid-2">
-                                                            <p ><label>$4.00</label><em class="item_price">$3.50</em></p>
+                                                        <p ><label></label><em class="item_price"><h2><%=listeMenu.get(i).getProduit().getPrix() %> Ar</h2></em></p>
                                                               <div class="block">
                                                                     <div class="starbox small ghosting"> </div>
                                                             </div>
                                                             <div class="clearfix"></div>
                                                     </div>
                                                     <div class="add" >
-                                                        <button id="boutonajout" class="btn btn-default my-cart-btn my-cart-b " style="" data-id="1" data-name="Moong" data-summary="summary 1" data-price="1.50" data-quantity="1" data-image="images/of.png">Ajouter au panier</button>
+                                                        <button id="boutonajout" class="btn btn-default my-cart-btn my-cart-b " style="" data-id="<%=listeMenu.get(i).getProduit().getIdProduit() %>" data-name="<%=listeMenu.get(i).getProduit().getDesignation() %>" data-summary="summary <%=listeMenu.get(i).getProduit().getIdProduit() %>" data-price="<%=listeMenu.get(i).getProduit().getPrix() %>" data-quantity="1" data-image="images/of.png">Ajouter au panier</button>
                                                     </div> <br><hr/>
-                                                <div class="row" style="border: 1px solid #FFF">
-                                                        <div class="col-sm-4" style="background-color:lavender;"><span class="glyphicon glyphicon-thumbs-up">(3)</span></div>
-                                                        <div class="col-sm-4" style="background-color:lavender;"><span class="glyphicon glyphicon-comment">(0)</span></div>
-                                                        <div class="col-sm-4" style="background-color:lavender;"><span class="glyphicon glyphicon-share"></span></div>
-                                               </div>
-                                            </div>
-                                    </div>
-                            </div>
-                       <%}%>
-                            <div class="clearfix"></div>
-                     </div>
-            </div>
-        
-        <!--tab2-->
-            <div class="tab-pane  text-style" id="tab2">
-                    <div class=" con-w3l">
-                        <%for (int i=0;i<4;i++){%>
-                            <div class="col-md-3 m-wthree">
-                                    <div class="col-m">
-                                            <a href="#" data-toggle="modal" data-target="#myModal1" class="offer-img">
-                                                    <img src="images/big4.jpg" class="img-responsive" alt="">
-                                                    <div class="offer"><p><span>Voir</span></p></div>
-                                            </a>
-                                            <div class="mid-1">
-                                                    <div class="women">
-                                                            <h6><a href="single.html">Lays</a>(100 g)</h6>							
-                                                    </div>
-                                                    <div class="mid-2">
-                                                            <p ><label>$1.00</label><em class="item_price">$0.70</em></p>
-                                                              <div class="block">
-                                                                    <div class="starbox small ghosting"> </div>
-                                                            </div>
-                                                            <div class="clearfix"></div>
-                                                    </div>
-                                                    <div class="add" >
-                                                        <button id="boutonajout" class="btn btn-default my-cart-btn my-cart-b " style="" data-id="1" data-name="Moong" data-summary="summary 1" data-price="1.50" data-quantity="1" data-image="images/of.png">Ajouter au panier</button>
-                                                    </div><br><hr>
-                                                    <div class="row" style="border: 1px solid #FFF">
-                                                        <div class="col-sm-4" style="background-color:lavender;"><span class="glyphicon glyphicon-thumbs-up">(3)</span></div>
-                                                        <div class="col-sm-4" style="background-color:lavender;"><span class="glyphicon glyphicon-comment">(0)</span></div>
-                                                        <div class="col-sm-4" style="background-color:lavender;"><span class="glyphicon glyphicon-share"></span></div>
-                                                    </div>
-                                            </div>
-                                    </div>
-                            </div>
-                     <%}%>       		  
-            </div>
-            </div>      
-                <!--tab3-->
-            <div class="tab-pane  text-style" id="tab3">
-                    <div class=" con-w3l">
-                        <%for (int i=0;i<4;i++){%>
-                            <div class="col-md-3 m-wthree">
-                                    <div class="col-m">
-                                    <a href="#" data-toggle="modal" data-target="#myModal1" class="offer-img">
-                                                    <img src="images/big5.jpg" class="img-responsive" alt="">
-                                                    <div class="offer"><p><span>Voir</span></p></div>
-                                     </a>
-                                            <div class="mid-1">
-                                                    <div class="women">
-                                                            <h6><a href="single.html">Banana</a>(6 pcs)</h6>							
-                                                    </div>
-                                                    <div class="mid-2">
-                                                            <p ><label>$2.00</label><em class="item_price">$1.50</em></p>
-                                                              <div class="block">
-                                                                    <div class="starbox small ghosting"> </div>
-                                                            </div>
-                                                            <div class="clearfix"></div>
-                                                    </div>
-                                                    <div class="add" >
-                                                        <button id="boutonajout" class="btn btn-default my-cart-btn my-cart-b " style="" data-id="1" data-name="Moong" data-summary="summary 1" data-price="1.50" data-quantity="1" data-image="images/of.png">Ajouter au panier</button>
-                                                    </div><br><hr>
-                                                    <div class="row" style="border: 1px solid #FFF">
-                                                        <div class="col-sm-4" style="background-color:lavender;"><span class="glyphicon glyphicon-thumbs-up">(3)</span></div>
-                                                        <div class="col-sm-4" style="background-color:lavender;"><span class="glyphicon glyphicon-comment">(0)</span></div>
-                                                        <div class="col-sm-4" style="background-color:lavender;"><span class="glyphicon glyphicon-share"></span></div>
-                                                    </div>
-                                            </div>
-                                    </div>
-                            </div>
-                      <%}%>     		  
-            </div>
-            </div>
-            <div class="tab-pane text-style" id="tab4">
-                            <div class=" con-w3l">
-                    <%for (int i=0;i<4;i++){%>
-                            <div class="col-md-3 m-wthree">
-                                    <div class="col-m">
-                                            <a href="#" data-toggle="modal" data-target="#myModal1" class="offer-img">
-                                                    <img src="images/big6.jpg" class="img-responsive" alt="">
-                                                    <div class="offer"><p><span>Voir</span></p></div>
-                                            </a>
-                                            <div class="mid-1">
-                                                    <div class="women">
-                                                            <h6><a href="single.html">Bread</a>(500 g)</h6>							
-                                                    </div>
-                                                    <div class="mid-2">
-                                                            <p ><label>$1.00</label><em class="item_price">$0.80</em></p>
-                                                              <div class="block">
-                                                                    <div class="starbox small ghosting"> </div>
-                                                            </div>
-                                                            <div class="clearfix"></div>
-                                                    </div>
-                                                    <div class="add" >
-                                                        <button id="boutonajout" class="btn btn-default my-cart-btn my-cart-b " style="" data-id="1" data-name="Moong" data-summary="summary 1" data-price="1.50" data-quantity="1" data-image="images/of.png">Ajouter au panier</button>
-                                                    </div><br><hr>
-                                                    <div class="row" style="border: 1px solid #FFF">
-                                                        <div class="col-sm-4" style="background-color:lavender;"><span class="glyphicon glyphicon-thumbs-up">(3)</span></div>
-                                                        <div class="col-sm-4" style="background-color:lavender;"><span class="glyphicon glyphicon-comment">(0)</span></div>
-                                                        <div class="col-sm-4" style="background-color:lavender;"><span class="glyphicon glyphicon-share"></span></div>
-                                                     </div>
                                                 
+                                                   
+                                                    <button id="aime<%=i%><%=j%>"> <div class="col-sm-2" style="background-color:lavender;"><span class="glyphicon glyphicon-thumbs-up" id="jaime<%=i%><%=j%>">(<%=nombreJaime%>)</span></div></button>
+                                                    <a href="Partage?userId=<%=userId%> &image=<%= listeMenu.get(i).getProduit().getImage() %>"> <button id="shaire<%=i%><%=j%>">  <div class="col-sm-2" style="background-color:lavender;"><span class="glyphicon glyphicon-share"></span></div></button></a>
+                                                    <div class="col-sm-2"></div>
+                                                    <div class="col-sm-2"></div>
+                                                    <div class="col-sm-2"></div>
+                                                    <div class="col-sm-2"></div>
                                             </div>
                                     </div>
+                                                    <div id="msCon<%=i%><%=j%>"></div>
                             </div>
-                       <%}%>
-                            <div class="clearfix"></div>
-                     </div>
-            </div>
-    </div>
-</div>
-  </div>
-</div>
-  <!--modal-->
-  <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                    
+            <!--modal-->
+  <div class="modal fade" id="myModal1<%=i%><%=j%>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
             <div class="modal-content modal-info">
                     <div class="modal-header">
@@ -219,23 +129,27 @@
                     </div>
                     <div class="modal-body modal-spa">
                                     <div class="col-md-5 span-2">
-                                        <h3>Pizza</h3>
+                                        <h2><%= listeMenu.get(i).getNomMenu() %></h2>
                                         <div class="item">
-                                                <img src="images/big6.jpg" class="img-responsive" alt="">
+                                                <img src="images/<%=listeMenu.get(i).getProduit().getImage()%>" class="img-responsive" alt="">
                                         </div>
                                     </div>
                                     <div class="col-md-7 span-1 ">
                                             
-                                            <p class="in-para"> There are many variations of passages of Lorem Ipsum.</p>
+                                        <h4> <p class="in-para"><%=listeMenu.get(i).getProduit().getDesignation() %></p></h4>
                                             <div class="price_single">
-                                              <span class="reducedfrom "><del>$10.00</del>$9.00</span>
+                                              <span class="reducedfrom "><strong>Prix:</strong><%=listeMenu.get(i).getProduit().getPrix() %></span>
 
                                              <div class="clearfix"></div>
                                             </div>
-                                            <h4 class="quick">Quick Overview:</h4>
-                                            <p class="quick_desc"> Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Typi non habent claritatem insitam; es</p>
+                                            <h4 class="quick">Restaurant:</h4>
+                                            <p class="quick_desc">
+                                            <h4> <%=listeMenu.get(i).getResto().getNomResto() %></h4><hr>
+                                            <h4> <%=listeMenu.get(i).getResto().getDescription() %></h4><hr>
+                                            
+                                            </p>
                                              <div class="add-to">
-                                                  <button class="btn btn-default btn-sm my-cart-btn my-cart-btn1 " data-id="2" data-name="Sunflower Oil" data-summary="summary 2" data-price="9.00" data-quantity="1" data-image="images/big1.jpg"> <span class="glyphicon glyphicon-shopping-cart"></span>Ajouter au panier</button>
+                                                   <button id="boutonajout" class="btn btn-default my-cart-btn my-cart-b " style="" data-id="<%=listeMenu.get(i).getProduit().getIdProduit() %>" data-name="<%=listeMenu.get(i).getProduit().getDesignation() %>" data-summary="summary <%=listeMenu.get(i).getProduit().getIdProduit() %>" data-price="<%=listeMenu.get(i).getProduit().getPrix() %>" data-quantity="1" data-image="images/of.png">Ajouter au panier</button>
                                                    <button type="button" class="btn btn-default btn-sm">
                                                     <span class="glyphicon glyphicon-comment"></span> Commentaires
                                                   </button>
@@ -248,6 +162,53 @@
             </div>
     </div>
   <!--fin modal--->
+     <script>
+      $(document).ready(function(){
+          
+		$("#aime<%=i%><%=j%>").click(function()
+		{
+			if(document.getElementById("userId<%=i%><%=j%>").value=='0')
+                        {
+                            document.getElementById("msCon<%=i%><%=j%>").innerHTML="Veiller connecter!";
+                        }
+                        $.ajax({
+			   url : 'Vote',
+			   type : 'GET',
+			   data :  'userId='+document.getElementById('userId<%=i%><%=j%>').value+'&menuId='+document.getElementById('menuId<%=i%><%=j%>').value+'&daty='+document.getElementById('date<%=i%><%=j%>').value,
+			   dataType:'html',
+                            success : function(responseText)
+                             {
+                                   $('#jaime<%=i%><%=j%>').text(responseText);
+                             },
+			   error : function(resultat, statut, erreur)
+			   { 
+				 
+			   },
+			   complete : function(resultat, statut)
+			  {	
+                              
+			  }
+			});
+		    });
+		});
+                
+             
+  </script>
+                       <%}%>
+                            
+                     </div>
+            </div>
+     <%}%>
+        
+            
+                
+                            
+    </div>
+</div>
+  </div>
+                            
+</div>
+  
 <!--==============================footer=================================-->
 
 <footer>    
@@ -255,10 +216,15 @@
     <div class="grid_6 prefix_3">
       <a href="index.html" class="f_logo"><img src="images/lol.png" alt=""><span></span></a>
       <div class="copy">
-      &copy; 2013 | <a href="#">Privacy Policy</a> <br> Website   designed by <a href="http://store.templatemonster.com?aff=netsib1" rel="nofollow">TemplateMonster.com</a>
+          Co&Diams
       </div>
     </div>
   </div>
+     <!--==============================header=================================-->
+            <jsp:include page="LOGIN/index.jsp" />
+
+        <!--==============================Content=================================-->
+
 </footer>
        <script>
       $(document).ready(function(){ 

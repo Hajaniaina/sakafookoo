@@ -110,6 +110,8 @@
         ); 
       }) ;
     </script>
+    
+     <jsp:include page="LOGIN/index.jsp" />
 </body>
 
 </html>

@@ -1,32 +1,4 @@
- .type-text{
-	background : -webkit-linear-gradient(rgb(251, 251, 254) 18%, rgb(250, 251, 253) 51%, rgb(251, 251, 252) 78%);
-	background : -moz-linear-gradient(rgb(251, 251, 254) 18%, rgb(250, 251, 253) 51%, rgb(251, 251, 252) 78%);
-	padding-bottom: 13px;
-}
-
-input[type='text']{
-	border: 1px solid #CED3D9;
-	margin: 13px 0 0 28px;
-	padding: 10px;
-	outline: 0;
-	border-radius: 5px;
-	width: 310px;
-	color : #A0A0A0;
-}
-
-button[type='submit']{
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	background: -webkit-linear-gradient(rgb(32, 199, 127) 21%, rgb(30, 180, 115) 52%, rgb(28, 160, 101) 79%);
-	background: -moz-linear-gradient(rgb(32, 199, 127) 21%, rgb(30, 180, 115) 52%, rgb(28, 160, 101) 79%);
-	background: -ms-linear-gradient(rgb(32, 199, 127) 21%, rgb(30, 180, 115) 52%, rgb(28, 160, 101) 79%);
-	box-shadow: inset 0 0 2px 1px #DDD7D7;
-	border: 1px solid #A0A0A0;
-	padding: 2px 22px 10px 20px;
-	margin: 0px 0 0 25px;
-	border-radius: 4px;
-}
-
+ 
 button[type='submit']:hover{
 	cursor: pointer;
 }
@@ -42,9 +14,6 @@ button[type='submit']:hover #i{
 	-webkit-transition : all .25s ease;
 	-moz-transition : all .25s ease;
 }
-
-
-
 
 section {
   width: 500px;

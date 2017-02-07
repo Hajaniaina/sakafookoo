@@ -317,6 +317,7 @@ h1 a img {
 	text-align: center;
 	overflow: hidden;
 	display: block;
+        height:200px;
 }
 
 
@@ -325,17 +326,17 @@ h1 a img {
 
 .block1 .price {
 	-moz-box-sizing: border-box;
- -webkit-box-sizing: border-box;
- -o-box-sizing: border-box;
- box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -o-box-sizing: border-box;
+        box-sizing: border-box;
 	padding: 70px 0 67px;
 	left: 50%;
 	height: 240px;
 	display: block;
 	top: 45%;
 	overflow: hidden;
-	margin-top: -108px;
-	margin-left: -500px;
+	margin-top: -80px;
+	margin-left: -450px;
 	font: bold 20px/20px 'Open Sans', sans-serif;
 	color: #fff;
 	width: 1000px;
@@ -368,6 +369,7 @@ top: 2px;
     background: rgba(255,255,255,0.6);
     border-color: #d7d7b1;
     font-size: 16px;
+    display:inline;
     border-radius:20px !important;
     text-align: center;
     color:#5f5e4e !important;
