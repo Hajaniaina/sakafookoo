@@ -19,6 +19,7 @@
          
    <%
        ArrayList<DetailMenu>listeMenu=new FonctionMenu().listerMenus();
+       JOptionPane.showMessageDialog(null, listeMenu.size());
        int userId=0;
        String mssgRech="";
        if(session.getAttribute("user")!=null)
@@ -41,7 +42,7 @@
            if(listeMenu.size()<=0)
            {
                listeMenu=new FonctionMenu().listerMenus();
-               mssgRech="Pas de resultat associé a votre recherche";
+               mssgRech="Pas de resultat associÃ© a votre recherche";
            }
        }
    %>
