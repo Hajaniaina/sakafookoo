@@ -18,8 +18,7 @@ public class UtilDB
          dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
       }catch(Exception ex)
       {
-          JOptionPane.showMessageDialog(null, ex.getMessage());
-          ex.printStackTrace();
+          
       }
         return DriverManager.getConnection(dbUrl, username, password);
     }
